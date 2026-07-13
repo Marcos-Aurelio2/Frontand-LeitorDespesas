@@ -1,0 +1,6 @@
+{
+  "name": "Finance Core",
+  "description": "Dashboard financeiro para controle de receitas, despesas, importação de faturas e categorias.",
+  "requestFramePermissions": [],
+  "majorCapabilities": []
+}
