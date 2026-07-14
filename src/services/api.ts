@@ -15,7 +15,7 @@ export interface BackendDespesa {
   tipo: 'DESPESA' | 'RECEITA' | string;
 }
 
-const DEFAULT_API_URL = 'http://localhost:8080';
+const DEFAULT_API_URL = 'http://localhost:80801';
 
 /**
  * Returns the currently configured API Java URL from localStorage,
