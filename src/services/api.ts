@@ -15,7 +15,7 @@ export interface BackendDespesa {
   tipo: 'DESPESA' | 'RECEITA' | string;
 }
 
-const DEFAULT_API_URL = 'http://localhost:80801';
+const DEFAULT_API_URL = 'https://backend-leitor-de-despesas.onrender.com';
 
 /**
  * Returns the currently configured API Java URL from localStorage,
