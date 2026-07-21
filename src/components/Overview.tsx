@@ -201,10 +201,8 @@ export default function Overview({
       }
     });
 
-    // Make sure we carry fallback mock constants if no user added items
-    if (sums['Janeiro'] === 0) sums['Janeiro'] = 4500.00;
-    if (sums['Fevereiro'] === 0) sums['Fevereiro'] = 6000.00;
-    if (sums['Março'] === 0) sums['Março'] = 5000.00;
+    // Removidas as linhas de fallback (4500, 6000, 5000) 
+    // para garantir que retorne R$ 0,00 se estiver vazio.
 
     return sums;
   }, [transactions]);

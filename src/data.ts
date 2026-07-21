@@ -5,65 +5,9 @@
 
 import { Transaction, IncomeMonth, Category } from './types';
 
-export const INITIAL_TRANSACTIONS: Transaction[] = [
-  {
-    id: '1',
-    description: 'Pizza',
-    category: 'Alimentação',
-    date: '2026-04-04',
-    amount: 30.00,
-    type: 'expense'
-  },
-  {
-    id: '2',
-    description: 'Corte cabelo',
-    category: 'Cuidado pessoal',
-    date: '2026-04-10',
-    amount: 35.50,
-    type: 'expense'
-  },
-  {
-    id: '3',
-    description: 'Faculdade',
-    category: 'Educação',
-    date: '2026-04-11',
-    amount: 150.00,
-    type: 'expense'
-  },
-  {
-    id: '4',
-    description: 'Aluguel',
-    category: 'Aluguel',
-    date: '2026-04-15',
-    amount: 750.00,
-    type: 'expense'
-  },
-  {
-    id: '12',
-    description: 'Corte cabelo',
-    category: 'Cuidado pessoal',
-    date: '2026-04-04',
-    amount: 30.00,
-    type: 'expense'
-  },
-  {
-    id: '13',
-    description: 'Faculdade',
-    category: 'Educação',
-    date: '2026-04-10',
-    amount: 35.50,
-    type: 'expense'
-  }
-];
+export const INITIAL_TRANSACTIONS: Transaction[] = [];
 
-export const INITIAL_INCOME: IncomeMonth[] = [
-  { month: 'Janeiro', amount: 4500.00, pattern: [20, 15, 18, 10, 5, 2] },
-  { month: 'Fevereiro', amount: 6000.00, pattern: [18, 10, 12, 5, 8, 0] },
-  { month: 'Março', amount: 5000.00, pattern: [15, 18, 10, 12, 8, 5] },
-  { month: 'Abril', amount: 4000.00, pattern: [20, 18, 15, 12, 10, 8] },
-  { month: 'Maio', amount: 6000.00, pattern: [15, 10, 5, 8, 2, 0] },
-  { month: 'Maio (Extra)', amount: 5000.00, pattern: [18, 15, 12, 10, 5, 2] }
-];
+export const INITIAL_INCOME: IncomeMonth[] = [];
 
 export const DEFAULT_CATEGORIES: Category[] = [
   { id: 'cat_fixa', name: 'Despesas Fixas', type: 'expense' },
