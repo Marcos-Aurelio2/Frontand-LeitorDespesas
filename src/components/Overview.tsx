@@ -639,64 +639,53 @@ export default function Overview({
             </div>
 
             {/* Layout representation of the stacked bar chart */}
-            <div className="h-64 flex items-end justify-between px-6 pb-2 relative border-b border-slate-800">
-              
-              {/* Dynamic Stacked Bar Columns */}
-              {monthlyChartData.activeMonths.map((month) => {
-                const categoriesSum = monthlyChartData.grouped[month];
-                const sortedCategories = Object.keys(categoriesSum).filter(cat => categoriesSum[cat] > 0).sort();
+            <div className="overflow-x-auto mt-2 pb-2">
+              {(() => {
+                const todosOsMeses = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
                 
                 return (
-                  <div key={month} className="w-12 flex flex-col items-center group cursor-help transition-transform hover:scale-105 duration-200">
-                    <div className="w-full flex flex-col-reverse gap-0.5 h-44 items-stretch justify-start">
-                      {sortedCategories.length === 0 ? (
-                        // Empty month spacer
-                        <div className="h-2 bg-slate-850 border border-slate-800 rounded-full"></div>
-                      ) : (
-                        sortedCategories.map((cat, idx) => {
-                          const amount = categoriesSum[cat];
-                          const ratio = amount / monthlyChartData.maxTotal;
-                          const heightPx = Math.max(4, ratio * 160); // min 4px height so small items are slightly visible
-                          
-                          const colorInfo = categoryColors[cat] || colorPool[idx % colorPool.length];
-                          const titleText = `${cat}: R$ ${amount.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
-                          
-                          return (
-                            <div 
-                              key={cat}
-                              className={`w-full rounded-xs transition-all duration-300 ${colorInfo}`}
-                              style={{ height: `${heightPx}px` }}
-                              title={titleText}
-                            />
-                          );
-                        })
-                      )}
-                    </div>
-                    <span className="mt-4 font-mono text-[10px] text-slate-500 font-bold truncate max-w-full text-center" title={month}>
-                      {month.substring(0, 3)}
-                    </span>
-                  </div>
+                  <table className="w-full text-left text-xs border-collapse">
+                    <thead>
+                      <tr className="border-b border-[#3e4852] text-slate-500 font-mono text-[10px] uppercase">
+                        <th className="py-3 font-semibold sticky left-0 bg-[#1c2026] z-10">Categoria</th>
+                        {todosOsMeses.map(month => (
+                          <th key={month} className="py-3 px-4 text-right">{month.substring(0, 3)}</th>
+                        ))}
+                        <th className="py-3 pl-4 text-right text-[#95ccff] font-bold sticky right-0 bg-[#1c2026] z-10">Total</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {monthlyChartData.allCategories.map(category => {
+                        const categoryTotal = todosOsMeses.reduce((sum, month) => {
+                          const monthData = monthlyChartData.grouped[month] || {};
+                          return sum + (monthData[category] || 0);
+                        }, 0);
+
+                        if (categoryTotal === 0) return null;
+
+                        return (
+                          <tr key={category} className="border-b border-[#3e4852]/40 hover:bg-slate-900/30 transition-colors">
+                            <td className="py-3 font-semibold text-slate-300 uppercase text-[10px] whitespace-nowrap sticky left-0 bg-[#181c22] z-10 group-hover:bg-[#1c2026]">
+                              {category}
+                            </td>
+                            {todosOsMeses.map(month => {
+                              const val = (monthlyChartData.grouped[month] || {})[category] || 0;
+                              return (
+                                <td key={month} className="py-3 px-4 text-right font-mono text-slate-400">
+                                  {val > 0 ? `R$ ${val.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}` : <span className="text-slate-700">-</span>}
+                                </td>
+                              );
+                            })}
+                            <td className="py-3 pl-4 text-right font-mono text-[#95ccff] font-bold sticky right-0 bg-[#181c22] z-10 group-hover:bg-[#1c2026]">
+                              R$ {categoryTotal.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
                 );
-              })}
-
-              {/* Dynamic Float Legend over graphs */}
-              <div className="absolute right-2 top-0 space-y-1.5 p-2 bg-[#0a0e14]/80 border border-slate-800/80 rounded-md text-[10px] sm:text-xs max-h-36 overflow-y-auto w-36 z-10">
-                {monthlyChartData.allCategories.length === 0 ? (
-                  <span className="text-slate-500 font-mono text-[9px] uppercase">Sem dados</span>
-                ) : (
-                  monthlyChartData.allCategories.slice(0, 5).map((cat, idx) => {
-                    const colorInfo = categoryColors[cat] || colorPool[idx % colorPool.length];
-                    const colorClass = colorInfo.split(' ')[0]; // Extract bg class
-                    return (
-                      <div key={cat} className="flex items-center gap-1.5 truncate" title={cat}>
-                        <div className={`w-2 h-2 rounded-xs ${colorClass}`} />
-                        <span className="text-slate-400 truncate uppercase font-mono text-[9px] tracking-wide font-bold">{cat}</span>
-                      </div>
-                    );
-                  })
-                )}
-              </div>
-
+              })()}
             </div>
           </div>
 
